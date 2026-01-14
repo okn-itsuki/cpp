@@ -4,13 +4,7 @@
 #include <string>
 #include <iomanip>
 
-static std::string ReadLine()
-{
-	std::string line;
-	if (!std::getline(std::cin, line))
-		return std::string();
-	return line;
-}
+static std::string ReadLine();
 
 int main()
 {
@@ -47,9 +41,18 @@ int main()
 				std::cout << "Unknown command.\n";
 			}
 		}
-		catch (const std::exception& e)
+		catch (const std::exception &e)
 		{
 			std::cout << "Error: " << e.what() << "\n";
 		}
-	return 0;
+		return 0;
+	}
+}
+
+static std::string ReadLine()
+{
+	std::string line;
+	if (!std::getline(std::cin, line))
+		return std::string();
+	return line;
 }

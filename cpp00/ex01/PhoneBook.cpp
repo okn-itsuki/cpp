@@ -3,12 +3,11 @@
 #include <iomanip>
 #include <stdexcept>
 
-PhoneBook::PhoneBook()
-    : next_index_(0), stored_count_(0)
+PhoneBook::PhoneBook() : next_index_(0), stored_count_(0)
 {
 }
 
-std::string PhoneBook::ReadNonEmptyLine(const std::string& prompt)
+std::string PhoneBook::ReadNonEmptyLine(const std::string &prompt)
 {
     std::string line;
 
@@ -38,7 +37,7 @@ void PhoneBook::Add()
         stored_count_++;
 }
 
-std::string PhoneBook::Truncate10(const std::string& s)
+std::string PhoneBook::Truncate10(const std::string &s)
 {
     if (s.length() <= 10)
         return s;
@@ -75,7 +74,7 @@ void PhoneBook::Search()
     if (idx >= stored_count_)
         throw std::runtime_error("index out of range");
 
-    const Contact& c = contacts_[idx];
+    const Contact &c = contacts_[idx];
     std::cout << "First name: " << c.GetFirstName() << "\n";
     std::cout << "Last name: " << c.GetLastName() << "\n";
     std::cout << "Nickname: " << c.GetNickname() << "\n";
