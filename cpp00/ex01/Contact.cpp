@@ -1,34 +1,25 @@
-void SetFirstName(const std::string v)
+#include "Contact.hpp"
+
+Contact::Contact() : is_set_(false) {}
+
+void Contact::Set(const std::string &first,
+				  const std::string &last,
+				  const std::string &nick,
+				  const std::string &phone,
+				  const std::string &secret)
 {
-	
+	first_name_ = first;
+	last_name_ = last;
+	nickname_ = nick;
+	phone_number_ = phone;
+	darkest_secret_ = secret;
+	is_set_ = true;
 }
 
-void SetLastName(const std::string &v)
-{
-}
+bool Contact::IsSet() const { return is_set_; }
 
-void SetNickname(const std::string &v)
-{
-}
-
-void SetPhoneNumber(const std::string &v)
-{
-}
-
-void SetDarkestSecret(const std::string &v)
-{
-}
-
-const std::string &GetFirstName() const;
-const std::string &GetLastName() const;
-const std::string &GetNickname() const;
-const std::string &GetPhoneNumber() const;
-const std::string &GetDarkestSecret() const;
-
-bool IsEmpty()
-{
-}
-
-void Clear()
-{
-}
+const std::string &Contact::FirstName() const { return first_name_; }
+const std::string &Contact::LastName() const { return last_name_; }
+const std::string &Contact::Nickname() const { return nickname_; }
+const std::string &Contact::PhoneNumber() const { return phone_number_; }
+const std::string &Contact::DarkestSecret() const { return darkest_secret_; }

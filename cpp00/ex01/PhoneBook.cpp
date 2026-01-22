@@ -3,81 +3,117 @@
 #include <iomanip>
 #include <stdexcept>
 
-PhoneBook::PhoneBook() : next_index_(0), stored_count_(0)
+PhoneBook::PhoneBook() : count_(0), next_index_(0) {}
+
+std::string PhoneBook::ReadLine()
 {
+	std::string line;
+	if (!std::getline(std::cin, line))
+		return std::string();
+	return line;
 }
 
-std::string PhoneBook::ReadNonEmptyLine(const std::string &prompt)
+std::string PhoneBook::PromptNonEmpty(const std::string &label)
 {
-    std::string line;
+	while (true)
+	{
+		std::cout << label;
+		std::string s = ReadLine();
 
-    std::cout << prompt;
-    if (!std::getline(std::cin, line))
-        throw std::runtime_error("input error");
+		if (!std::cin) // EOF
+			throw std::runtime_error("input terminated (EOF)");
 
-    if (line.empty())
-        throw std::runtime_error("empty field");
+		if (!s.empty())
+			return s;
 
-    return line;
-}
-
-void PhoneBook::Add()
-{
-    Contact c;
-
-    c.SetFirstName(ReadNonEmptyLine("First name: "));
-    c.SetLastName(ReadNonEmptyLine("Last name: "));
-    c.SetNickname(ReadNonEmptyLine("Nickname: "));
-    c.SetPhoneNumber(ReadNonEmptyLine("Phone number: "));
-    c.SetDarkestSecret(ReadNonEmptyLine("Darkest secret: "));
-
-    contacts_[next_index_] = c;
-    next_index_ = (next_index_ + 1) % 8;
-    if (stored_count_ < 8)
-        stored_count_++;
+		std::cout << "Input cannot be empty.\n";
+	}
 }
 
 std::string PhoneBook::Truncate10(const std::string &s)
 {
-    if (s.length() <= 10)
-        return s;
-    return s.substr(0, 9) + ".";
+	if (s.length() > 10)
+		return s.substr(0, 9) + ".";
+	return s;
+}
+
+bool PhoneBook::ParseIndex(const std::string &s, int &out)
+{
+	if (s.empty())
+		return false;
+
+	for (size_t i = 0; i < s.size(); ++i)
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return false;
+	}
+
+	long v = 0;
+	for (size_t i = 0; i < s.size(); ++i)
+	{
+		v = v * 10 + (s[i] - '0');
+		if (v > 1000000) // 雑な上限でオーバーフロー回避
+			return false;
+	}
+
+	out = static_cast<int>(v);
+	return true;
+}
+
+void PhoneBook::Add()
+{
+	std::string fn = PromptNonEmpty("First name: ");
+	std::string ln = PromptNonEmpty("Last name: ");
+	std::string nn = PromptNonEmpty("Nickname: ");
+	std::string pn = PromptNonEmpty("Phone number: ");
+	std::string ds = PromptNonEmpty("Darkest secret: ");
+
+	contacts_[next_index_].Set(fn, ln, nn, pn, ds);
+
+	next_index_ = (next_index_ + 1) % 8;
+	if (count_ < 8)
+		count_++;
+
+	std::cout << "Saved.\n";
 }
 
 void PhoneBook::Search()
 {
-    if (stored_count_ == 0)
-        throw std::runtime_error("phonebook is empty");
+	if (count_ == 0)
+	{
+		std::cout << "PhoneBook is empty.\n";
+		return;
+	}
 
-    std::cout << std::setw(10) << "Index" << "|"
-              << std::setw(10) << "First Name" << "|"
-              << std::setw(10) << "Last Name" << "|"
-              << std::setw(10) << "Nickname" << "\n";
+	std::cout << std::setw(10) << "Index" << "|"
+			  << std::setw(10) << "First Name" << "|"
+			  << std::setw(10) << "Last Name" << "|"
+			  << std::setw(10) << "Nickname" << "\n";
 
-    for (int i = 0; i < stored_count_; ++i)
-    {
-        std::cout << std::setw(10) << i << "|"
-                  << std::setw(10) << Truncate10(contacts_[i].GetFirstName()) << "|"
-                  << std::setw(10) << Truncate10(contacts_[i].GetLastName()) << "|"
-                  << std::setw(10) << Truncate10(contacts_[i].GetNickname()) << "\n";
-    }
+	for (int i = 0; i < count_; ++i)
+	{
+		std::cout << std::setw(10) << i << "|"
+				  << std::setw(10) << Truncate10(contacts_[i].FirstName()) << "|"
+				  << std::setw(10) << Truncate10(contacts_[i].LastName()) << "|"
+				  << std::setw(10) << Truncate10(contacts_[i].Nickname())
+				  << "\n";
+	}
 
-    std::cout << "Index: ";
-    std::string input;
-    if (!std::getline(std::cin, input))
-        throw std::runtime_error("input error");
+	std::cout << "Index to display: ";
+	std::string s = ReadLine();
+	if (!std::cin)
+		throw std::runtime_error("input terminated (EOF)");
 
-    if (input.size() != 1 || input[0] < '0' || input[0] > '7')
-        throw std::runtime_error("invalid index");
+	int idx;
+	if (!ParseIndex(s, idx) || idx < 0 || idx >= count_)
+	{
+		std::cout << "Invalid index.\n";
+		return;
+	}
 
-    int idx = input[0] - '0';
-    if (idx >= stored_count_)
-        throw std::runtime_error("index out of range");
-
-    const Contact &c = contacts_[idx];
-    std::cout << "First name: " << c.GetFirstName() << "\n";
-    std::cout << "Last name: " << c.GetLastName() << "\n";
-    std::cout << "Nickname: " << c.GetNickname() << "\n";
-    std::cout << "Phone number: " << c.GetPhoneNumber() << "\n";
-    std::cout << "Darkest secret: " << c.GetDarkestSecret() << "\n";
+	std::cout << "First name: " << contacts_[idx].FirstName() << "\n";
+	std::cout << "Last name: " << contacts_[idx].LastName() << "\n";
+	std::cout << "Nickname: " << contacts_[idx].Nickname() << "\n";
+	std::cout << "Phone number: " << contacts_[idx].PhoneNumber() << "\n";
+	std::cout << "Darkest secret: " << contacts_[idx].DarkestSecret() << "\n";
 }
