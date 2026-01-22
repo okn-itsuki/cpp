@@ -1,7 +1,6 @@
 #include "PhoneBook.hpp"
-#include "Contact.hpp"
+#include "Input.hpp"
 #include <iostream>
-#include <string>
 #include <iomanip>
 
 static std::string ReadLine();
