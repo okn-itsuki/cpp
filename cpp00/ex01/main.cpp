@@ -8,45 +8,33 @@ static std::string ReadLine();
 
 int main()
 {
-	PhoneBook pb;
+	PhoneBook phonebook;
 
 	while (true)
 	{
 		try
 		{
 			std::cout << "Enter command (ADD, SEARCH, EXIT): ";
-			std::string cmd = ReadLine();
+			std::string command = ReadLine();
 
 			if (!std::cin) // EOF or input error
 				break;
 
-			if (cmd == "ADD")
-			{
-				pb.Add();
-			}
-			else if (cmd == "SEARCH")
-			{
-				pb.Search();
-			}
-			else if (cmd == "EXIT")
-			{
+			if (command == "ADD")
+				phonebook.Add();
+			else if (command == "SEARCH")
+				phonebook.Search();
+			else if (command == "EXIT")
 				break;
-			}
-			else if (cmd.empty())
-			{
-				// 何もしない（空行は無視）
-			}
-			else
-			{
+			else if (command.empty())
 				std::cout << "Unknown command.\n";
-			}
 		}
 		catch (const std::exception &e)
 		{
 			std::cout << "Error: " << e.what() << "\n";
 		}
-		return 0;
 	}
+	return 0;
 }
 
 static std::string ReadLine()
