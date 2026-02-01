@@ -1,26 +1,29 @@
 NAME := zombie
 
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXX      := c++
+CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
-DBG_NAME = $(NAME)_debug
-DBGFLAGS = -g3 -O0 -DDEBUG
+DBG_NAME := $(NAME)_debug
+DBGFLAGS := -g3 -O0 -DDEBUG
+DBG_CXXFLAGS := $(CXXFLAGS) $(DBGFLAGS)
 
-DBG_CXXFLAGS = $(CXXFLAGS) $(DBGFLAGS)
+SRCS := main.cpp newZombie.cpp randomChump.cpp Zombie.cpp
 
-SRCS := main.cpp  newZombie.cpp  randomChump.cpp  Zombie.cpp  Zombie.hpp
-OBJS = $(SRCS:.cpp=.o)
-DBG_OBJS = $(SRCS:.cpp=_debug.o)
+OBJS     := $(SRCS:.cpp=.o)
+DBG_OBJS := $(SRCS:.cpp=_debug.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $@
 
 debug: $(DBG_NAME)
 
 $(DBG_NAME): $(DBG_OBJS)
-	$(CXX) $(DBG_CXXFLAGS) $(DBG_OBJS) -o $(DBG_NAME)
+	$(CXX) $(DBG_CXXFLAGS) $(DBG_OBJS) -o $@
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 %_debug.o: %.cpp
 	$(CXX) $(DBG_CXXFLAGS) -c $< -o $@
