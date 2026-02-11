@@ -6,6 +6,8 @@ int main()
 	std::cout << "=== heap ===" << std::endl;
 
 	Zombie *heapZombie = newZombie("HeapZombie");
+	if (heapZombie == NULL)
+		return 1;
 	heapZombie->announce();
 	delete heapZombie;
 
