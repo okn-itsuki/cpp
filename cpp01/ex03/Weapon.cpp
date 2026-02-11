@@ -1,4 +1,14 @@
-#ifndef WEAPON_HPP
-#define WEAPON_HPP
+#include "Weapon.hpp"
 
-#endif
+Weapon::Weapon(std::string type) : type_(type) {}
+
+const std::string&	Weapon::getType(void) const
+{
+	return (type_);
+}
+
+void	Weapon::setType(std::string newType)
+{
+	type_ = newType;
+	return ;
+}
