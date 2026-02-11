@@ -5,6 +5,7 @@
 int main()
 {
 	int N;
+	std::cout << "N = ?" << std::endl;
 	std::cin >> N;
 	if (!std::cin)
 	{
