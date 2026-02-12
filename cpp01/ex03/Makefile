@@ -8,7 +8,7 @@ DBGFLAGS = -g3 -O0 -DDEBUG
 
 DBG_CXXFLAGS = $(CXXFLAGS) $(DBGFLAGS)
 
-SRCS := HumanB.cpp  Human.cpp  main.cpp  Weapon.cpp
+SRCS := HumanB.cpp  HumanA.cpp  main.cpp  Weapon.cpp
 OBJS = $(SRCS:.cpp=.o)
 DBG_OBJS = $(SRCS:.cpp=_debug.o)
 
