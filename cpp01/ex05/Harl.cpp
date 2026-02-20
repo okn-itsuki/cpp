@@ -33,8 +33,8 @@ void Harl::info(void)
 void Harl::warning(void)
 {
 	std::cout << "\x1b[33mWRNG\x1b[m : "
-			  << "I think I deserve to have some extra bacon"
-			  << " for free. I’ve been coming for years,"
+			  << "I think I deserve to have some extra bacon for free."
+			  << " I’ve been coming for years,"
 			  << " whereas you started working here just last month."
 			  << std::endl;
 	return;
@@ -53,10 +53,20 @@ void Harl::complain(std::string level)
 {
 	std::string levels[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
-	for (int i = 0; i < 4; i++)
+	switch (level)
 	{
-		if (levels[i].compare(level) == 0)
-			(this->*category[i])();
+	case 0:
+		harl.debug();
+	case 1:
+		harl.info();
+	case 2:
+		harl.warning();
+	case 3:
+		harl.error();
+		break;
+	default:
+		std::cout << "[ Probably complaining about insignificant problems ]"
+				  << std::endl;
 	}
 	return;
 }
