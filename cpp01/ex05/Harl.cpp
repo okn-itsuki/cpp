@@ -51,20 +51,10 @@ void Harl::complain(std::string level)
 {
 	std::string levels[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
-	switch (level)
+	for (int i = 0; i < 4; i++)
 	{
-	case 0:
-		harl.debug();
-	case 1:
-		harl.info();
-	case 2:
-		harl.warning();
-	case 3:
-		harl.error();
-		break;
-	default:
-		std::cout << "[ Probably complaining about insignificant problems ]"
-				  << std::endl;
+		if (levels[i].compare(level) == 0)
+			(this->*category[i])();
 	}
 	return;
 }
