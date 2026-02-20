@@ -13,7 +13,9 @@ Harl::~Harl(void) {}
 void Harl::debug(void)
 {
 	std::cout << "\x1b[35mDEBUG\x1b[m : "
-			  << "I love having extra bacon for my 7XL-double-cheese-triple-pickle-specialketchup burger. I really do!"
+			  << "I love having extra bacon "
+			  << "for my 7XL-double-cheese-triple-pickle-specialketchup burger. "
+			  << "I really do!"
 			  << std::endl;
 	return;
 }
@@ -21,7 +23,9 @@ void Harl::debug(void)
 void Harl::info(void)
 {
 	std::cout << "\x1b[34mINFO\x1b[m : "
-			  << "I cannot believe adding extra bacon costs more money. You didn’t put enough bacon in my burger! If you did, I wouldn’t be asking for more!"
+			  << "I cannot believe adding extra bacon costs more money."
+			  << "You didn’t put enough bacon in my burger!"
+			  << " If you did, I wouldn’t be asking for more!"
 			  << std::endl;
 	return;
 }
@@ -29,7 +33,9 @@ void Harl::info(void)
 void Harl::warning(void)
 {
 	std::cout << "\x1b[33mWRNG\x1b[m : "
-			  << "I think I deserve to have some extra bacon for free. I’ve been coming for years, whereas you started working here just last month."
+			  << "I think I deserve to have some extra bacon"
+			  << " for free. I’ve been coming for years,"
+			  << " whereas you started working here just last month."
 			  << std::endl;
 	return;
 }
@@ -37,7 +43,8 @@ void Harl::warning(void)
 void Harl::error(void)
 {
 	std::cout << "\x1b[31mERR\x1b[m : "
-			  << "This is unacceptable! I want to speak to the manager now."
+			  << "This is unacceptable!"
+			  << "I want to speak to the manager now."
 			  << std::endl;
 	return;
 }
