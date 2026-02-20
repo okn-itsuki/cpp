@@ -8,8 +8,6 @@ Harl::Harl()
 	this->category[3] = &Harl::error;
 }
 
-Harl::~Harl(void) {}
-
 void Harl::debug(void)
 {
 	std::cout << "\x1b[35mDEBUG\x1b[m : "
