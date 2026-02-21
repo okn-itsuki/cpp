@@ -5,10 +5,11 @@
 int main()
 {
 	int N;
+	std::cout << "\x1b[38;2;160;160;160m" << "N = ?" << "\x1b[m" << std::endl;
 	std::cin >> N;
 	if (!std::cin)
 	{
-		std::cerr << "aborted due to input error" << std::endl;
+		std::cerr << "\x1b[38;2;160;160;160m" << "aborted due to input error" << "\x1b[m" <<  std::endl;
 		return 1;
 	}
 
@@ -16,7 +17,7 @@ int main()
 
 	if (!horde)
 	{
-		std::cerr << "Failed to create zombie horde" << std::endl;
+		std::cerr << "\x1b[38;2;160;160;160m" << "Failed to create zombie horde" << "\x1b[m" << std::endl;
 		return 1;
 	}
 
