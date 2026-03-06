@@ -5,11 +5,10 @@
 
 class Megaphon
 {
-	private :
-
+private:
 	Megaphon();
 
-	static bool	has_non_empty_args(int argc, char **argv)
+	static bool has_non_empty_args(int argc, char **argv)
 	{
 		for (int i = 1; i < argc; ++i)
 		{
@@ -21,21 +20,20 @@ class Megaphon
 		return false;
 	}
 
-	public :
-
-	static void	validata_args_or_throw(int argc, char **argv)
+public:
+	static void validata_args_or_throw(int argc, char **argv)
 	{
 		if (argc < 2)
 		{
 			throw ERROR_MESSAGE;
 		}
-		if (!has_non_empty_args(argc,argv))
+		if (!has_non_empty_args(argc, argv))
 		{
 			throw ERROR_MESSAGE;
 		}
 	}
 
-	static void	print_uppercase(int argc, char **argv)
+	static void print_uppercase(int argc, char **argv)
 	{
 		for (int i = 1; i < argc; ++i)
 		{
@@ -54,8 +52,8 @@ int main(int argc, char **argv)
 {
 	try
 	{
-		Megaphon::validata_args_or_throw(argc,argv);
-		Megaphon::print_uppercase(argc,argv);
+		Megaphon::validata_args_or_throw(argc, argv);
+		Megaphon::print_uppercase(argc, argv);
 	}
 	catch (const char *message)
 	{
